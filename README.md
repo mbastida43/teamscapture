@@ -7,3 +7,7 @@ Ao clicar em **Capturar conversa desta aba**, a extensão rola a conversa até a
 Tudo acontece no navegador: nenhum dado é enviado para fora. Veja a [Política de Privacidade](PRIVACY.md).
 
 Não afiliado à Microsoft. Microsoft Teams é marca registrada da Microsoft Corporation.
+
+## Licença
+
+[MIT](LICENSE)
