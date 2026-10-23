@@ -10,4 +10,4 @@ Não afiliado à Microsoft. Microsoft Teams é marca registrada da Microsoft Cor
 
 ## Licença
 
-[MIT](LICENSE)
+[MIT License](LICENSE)
