@@ -8,6 +8,16 @@ Tudo acontece no navegador: nenhum dado é enviado para fora. Veja a [Política 
 
 Não afiliado à Microsoft. Microsoft Teams é marca registrada da Microsoft Corporation.
 
+## Apoie o projeto
+
+Gostou da extensão? Doe qualquer valor via PIX:
+
+**Chave PIX (e-mail):** `donate@marlonbastida.com.br`
+
+Fora do Brasil? Use o PayPal com o mesmo e-mail. / Outside Brazil? Donate via PayPal to the same address:
+
+**PayPal:** `donate@marlonbastida.com.br`
+
 ## Licença
 
 [MIT License](LICENSE)
