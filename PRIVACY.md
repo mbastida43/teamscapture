@@ -1,6 +1,6 @@
 # Política de Privacidade — Chat Capture for Teams
 
-Última atualização: 23 de outubro de 2026
+Última atualização: 5 de novembro de 2026
 
 ## O que a extensão faz
 A extensão Chat Capture for Teams salva uma conversa ou canal do Microsoft Teams (versão web) em um arquivo .html no computador do usuário, apenas quando o usuário clica em "Capturar conversa desta aba".
