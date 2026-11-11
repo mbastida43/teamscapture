@@ -1,23 +1,23 @@
-# Política de Privacidade — Chat Capture for Teams
+# Privacy Policy — Chat Capture for Teams
 
-Última atualização: 5 de novembro de 2026
+Last updated: November 10, 2026
 
-## O que a extensão faz
-A extensão Chat Capture for Teams salva uma conversa ou canal do Microsoft Teams (versão web) em um arquivo .html no computador do usuário, apenas quando o usuário clica em "Capturar conversa desta aba".
+## What the extension does
+Chat Capture for Teams saves a Microsoft Teams (web version) chat or channel to an .html file on the user's computer, only when the user clicks "Capture chat in this tab".
 
-## Dados acessados
-Durante a captura, a extensão lê, na aba ativa, o conteúdo exibido da conversa: mensagens, nomes dos participantes, datas, imagens e estilos da página.
+## Data accessed
+During a capture, the extension reads the conversation content displayed in the active tab: messages, participant names, dates, images and page styles.
 
-## Como os dados são usados
-Esses dados são usados exclusivamente para gerar o arquivo .html, que é baixado diretamente para o computador do usuário.
+## How data is used
+This data is used solely to generate the .html file, which is downloaded directly to the user's computer.
 
-## Armazenamento
-A extensão guarda localmente (chrome.storage.local) apenas o estado da captura em andamento: fase, porcentagem, quantidade de mensagens, título da conversa e um log de progresso. O conteúdo das mensagens não é armazenado pela extensão.
+## Storage
+The extension stores locally (chrome.storage.local) only the state of the capture in progress: phase, percentage, message count, conversation title and a progress log. Message content is not stored by the extension.
 
-## Compartilhamento
-Nenhum dado é enviado a servidores do desenvolvedor ou de terceiros. A extensão não usa analytics, anúncios nem rastreamento. Os dados não são vendidos, transferidos ou usados para qualquer outra finalidade.
+## Sharing
+No data is sent to the developer's or any third party's servers. The extension does not use analytics, ads or tracking. Data is not sold, transferred or used for any other purpose.
 
-## Contato
+## Contact
 contactme@marlonbastida.com.br
 
-Não afiliado à Microsoft. Microsoft Teams é marca registrada da Microsoft Corporation.
+Not affiliated with Microsoft. Microsoft Teams is a registered trademark of Microsoft Corporation.

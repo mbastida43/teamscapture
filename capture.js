@@ -18,7 +18,7 @@
   const report = (patch, line) => {
     Object.assign(state, patch);
     if (line) state.log = state.log.concat(`${new Date().toLocaleTimeString()}  ${line}`).slice(-200);
-    bar.textContent = `📥 ${state.phase}${state.pct != null ? ` ${Math.round(state.pct * 100)}%` : ''} · ${state.msgs} mensagens`;
+    bar.textContent = `📥 ${state.phase}${state.pct != null ? ` ${Math.round(state.pct * 100)}%` : ''} · ${state.msgs} messages`;
     chrome.storage.local.set({ cap: state });
   };
   // Posição da rolagem em 0..1 (funciona em lista normal e invertida/column-reverse)
@@ -58,7 +58,7 @@
 
   // Sobe até o início e desce até o fim capturando os itens de um container.
   // onItem(el) é chamado uma vez por item novo (usado pra abrir respostas de canal).
-  async function collect(box, onItem, label = 'Conversa') {
+  async function collect(box, onItem, label = 'Chat') {
     const inBox = i => box.contains(i);
     const order = [], html = new Map(), extra = new Map();
     const firstKey = () => { const f = items().find(inBox); return f && key(f); };
@@ -66,18 +66,18 @@
     // Fase 1: sobe até o início. Só considera "início" depois de 20s (10 rodadas)
     // com a 1ª mensagem e a altura da lista paradas.
     // scrollTop = -scrollHeight vai pro topo tanto em lista normal quanto em column-reverse (Teams v2).
-    report({ phase: `${label}: subindo até o início`, pct: null }, `${label}: subindo até o início`);
+    report({ phase: `${label}: scrolling up to the start`, pct: null }, `${label}: scrolling up to the start`);
     for (let idle = 0, last = '', round = 0; idle < 10; round++) {
       box.scrollTop = -box.scrollHeight;
       box.dispatchEvent(new WheelEvent('wheel', { deltaY: -1000, bubbles: true }));
       await sleep(2000);
       const now = `${firstKey()}|${box.scrollHeight}`;
-      if (now !== last && round) report({}, `${label}: histórico carregou mais (altura ${box.scrollHeight}px)`);
+      if (now !== last && round) report({}, `${label}: more history loaded (height ${box.scrollHeight}px)`);
       idle = now === last ? idle + 1 : 0;
       last = now;
-      report({ phase: `${label}: confirmando início ${idle}/10` });
+      report({ phase: `${label}: confirming start ${idle}/10` });
     }
-    report({}, `${label}: início alcançado`);
+    report({}, `${label}: start reached`);
 
     // Retorna quantos itens novos apareceram e quantos já eram conhecidos (sobreposição)
     const grab = async () => {
@@ -115,17 +115,17 @@
       const atEnd = Math.abs(box.scrollTop - before) < 2; // não andou = chegou no fim
       let r = await grab();
       for (let retry = 0; r.known === 0 && order.length && retry < 10; retry++) {
-        report({}, `${label}: sem sobreposição, voltando um pouco (tentativa ${retry + 1}/10)`);
+        report({}, `${label}: no overlap, stepping back a bit (attempt ${retry + 1}/10)`);
         box.scrollTop -= box.clientHeight * 0.25;
         await sleep(2000);
         r = await grab();
       }
-      if (r.known === 0 && order.length) report({}, `⚠️ ${label}: possível falha de continuidade perto da mensagem ${order.length}`);
-      if (r.fresh) report({}, `${label}: +${r.fresh} mensagens (total ${order.length})`);
+      if (r.known === 0 && order.length) report({}, `⚠️ ${label}: possible continuity gap near message ${order.length}`);
+      if (r.fresh) report({}, `${label}: +${r.fresh} messages (total ${order.length})`);
       idle = (r.fresh === 0 && atEnd) ? idle + 1 : 0;
-      report({ phase: `${label}: descendo e capturando${idle ? ` (confirmando fim ${idle}/5)` : ''}`, pct: position(box), msgs: total });
+      report({ phase: `${label}: scrolling down and capturing${idle ? ` (confirming end ${idle}/5)` : ''}`, pct: position(box), msgs: total });
     }
-    report({}, `${label}: fim alcançado, ${order.length} mensagens`);
+    report({}, `${label}: end reached, ${order.length} messages`);
     return order.map(k => html.get(k) + (extra.get(k) || ''));
   }
 
@@ -135,7 +135,7 @@
     const btn = [...post.querySelectorAll('button, [role="button"]')]
       .find(b => REPLY_BTN.test(b.innerText || b.getAttribute('aria-label') || ''));
     if (!btn) return '';
-    report({}, `Abrindo respostas: "${(btn.innerText || btn.getAttribute('aria-label')).trim()}"`);
+    report({}, `Opening replies: "${(btn.innerText || btn.getAttribute('aria-label')).trim()}"`);
     const postBox = scrollable(post.parentElement);
     const before = new Set(items());
     const mainPhase = state.phase, mainPct = state.pct;
@@ -144,10 +144,10 @@
 
     // Respostas que abriram num painel/tela separada
     const pane = items().filter(i => !before.has(i) && !(postBox?.isConnected && postBox.contains(i)));
-    if (!pane.length) { report({}, 'Respostas expandidas no próprio post'); return ''; }
+    if (!pane.length) { report({}, 'Replies expanded inline in the post'); return ''; }
     const paneBox = scrollable(pane[0].parentElement);
     let replies = [];
-    if (paneBox) replies = await collect(paneBox, null, 'Respostas');
+    if (paneBox) replies = await collect(paneBox, null, 'Replies');
 
     // Fecha o painel: botão fechar/voltar mais próximo, senão Esc
     let closeBtn = null;
@@ -156,18 +156,18 @@
     if (closeBtn) closeBtn.click();
     else document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await sleep(1500);
-    report({ phase: mainPhase, pct: mainPct }, `Painel de respostas fechado (${replies.length} respostas)`);
+    report({ phase: mainPhase, pct: mainPct }, `Replies panel closed (${replies.length} replies)`);
 
     return replies.length ? `<div style="margin-left:48px;border-left:3px solid #6264a7;padding-left:8px">${replies.join('\n')}</div>` : '';
   }
 
   async function run() {
     const mainBox = scrollable(items()[0].parentElement);
-    if (!mainBox) return report({ phase: 'Erro', done: true }, '❌ Container de rolagem não encontrado');
+    if (!mainBox) return report({ phase: 'Error', done: true }, '❌ Scroll container not found');
     const isChannel = !!document.querySelector('[data-tid="channel-pane-message"]') || /channel|canal/i.test(location.href);
-    report({}, `Iniciado em: ${document.title} (${isChannel ? 'canal' : 'chat'})`);
+    report({}, `Started on: ${document.title} (${isChannel ? 'channel' : 'chat'})`);
     const all = await collect(mainBox, isChannel ? openReplies : null);
-    report({ phase: 'Gerando HTML', pct: 1 }, `Gerando HTML com ${all.length} mensagens…`);
+    report({ phase: 'Generating HTML', pct: 1 }, `Generating HTML with ${all.length} messages…`);
     bar.remove();
 
     // Página final = cópia da tela do Teams, com a lista virtual trocada pela conversa inteira
@@ -202,11 +202,11 @@
     a.href = URL.createObjectURL(new Blob(['<!doctype html>\n' + doc.outerHTML], { type: 'text/html' }));
     a.download = `${title}.html`;
     a.click();
-    report({ phase: 'Concluído', pct: 1, done: true }, `✅ Concluído: ${all.length} mensagens salvas em ${title}.html`);
+    report({ phase: 'Done', pct: 1, done: true }, `✅ Done: ${all.length} messages saved to ${title}.html`);
   }
 
   run()
-    .catch(e => report({ phase: 'Erro', done: true }, `❌ ${e.message}`))
+    .catch(e => report({ phase: 'Error', done: true }, `❌ ${e.message}`))
     .finally(() => { bar.remove(); window.__teamsCaptureRunning = false; });
   return 'started';
 })();

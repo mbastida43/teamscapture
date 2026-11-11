@@ -1,25 +1,27 @@
 # Chat Capture for Teams
 
-Extensão do Chrome que salva uma conversa ou canal inteiro do Microsoft Teams (versão web) em um único arquivo `.html`.
+Chrome extension that saves an entire Microsoft Teams (web version) chat or channel to a single `.html` file.
 
-**[Instalar na Chrome Web Store](https://chromewebstore.google.com/detail/kclbdbembpebgoapaadgcjhlncdbepjh)**
+**[Install from the Chrome Web Store](https://chromewebstore.google.com/detail/kclbdbembpebgoapaadgcjhlncdbepjh)**
 
-Ao clicar em **Capturar conversa desta aba**, a extensão rola a conversa até a primeira mensagem, desce até a última capturando tudo no caminho (inclusive respostas de posts em canais e mensagens longas com "Ver mais") e baixa um `.html` com imagens e estilos embutidos, que abre mesmo sem acesso ao Teams. O progresso aparece em tempo real no popup.
+When you click **Capture chat in this tab**, the extension scrolls the conversation up to the first message, then down to the last one, capturing everything along the way (including replies to channel posts and long messages behind "See more"), and downloads an `.html` file with embedded images and styles that opens even without access to Teams. Progress is shown in real time in the popup.
 
-Tudo acontece no navegador: nenhum dado é enviado para fora. Veja a [Política de Privacidade](PRIVACY.md).
+Everything happens in your browser: no data is sent anywhere. See the [Privacy Policy](PRIVACY.md).
 
-Não afiliado à Microsoft. Microsoft Teams é marca registrada da Microsoft Corporation.
+Not affiliated with Microsoft. Microsoft Teams is a registered trademark of Microsoft Corporation.
 
-## Apoie o projeto
+## Contact
 
-Gostou da extensão? Doe qualquer valor via PIX:
+contactme@marlonbastida.com.br
 
-**Chave PIX (e-mail):** `donate@marlonbastida.com.br`
+## Support the project
 
-Fora do Brasil? Use o PayPal com o mesmo e-mail. / Outside Brazil? Donate via PayPal to the same address:
+Like the extension? Donate any amount via PayPal:
 
 **PayPal:** `donate@marlonbastida.com.br`
 
-## Licença
+In Brazil? Use PIX with the same e-mail key: `donate@marlonbastida.com.br`
+
+## License
 
 [MIT License](LICENSE)
